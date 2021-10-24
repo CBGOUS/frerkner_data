@@ -1,0 +1,17 @@
+{"pipelineName":"isomiRtest",
+ "projectID":"datasteptest",
+ "projectRoot":"/Users/simonray/Dropbox/dropData/ngsdata/",
+ "dataRoot":"/mnt/data21/data/",
+ "stepsData":
+   [
+     {"step":"UnzipInputFiles",               "inputFolder":"fastq_files",           "outputFolder":"fastq_files"},
+     {"step":"FastqQC",                       "inputFolder":"fastq_files",           "outputFolder":"qcData"},
+     {"step":"SingleReadAdapterTrim",         "inputFolder":"fastq_files",           "outputFolder":"strimmedData"},
+     {"step":"CollapseReads",                 "inputFolder":"strimmedData",          "outputFolder":"scollapsedReads"},
+     {"step":"BowtieMapSingleReads",          "inputFolder":"ucollapsedReads",         "outputFolder":"mappedReadsM2"},
+     {"step":"ParseSAMForMiRNAs",             "inputFolder":"mappedReadsM2",   "outputFolder":"countedReadsM2SeedGroups"},     
+     {"step":"MergeIsomiRCounts",             "inputFolder":"countedReadsM2SeedGroups",  "outputFolder":"countedReadsM2SeedGroups"},
+     {"step":"DEwithEdgeR",                   "inputFolder":"countedReadsM2SeedGroups",  "outputFolder":"edgeRDESeedGroupsM2B10"},
+     {"step":"Exit"}
+   ]
+}   

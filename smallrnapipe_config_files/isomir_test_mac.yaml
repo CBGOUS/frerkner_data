@@ -1,0 +1,154 @@
+BSMapCalcMethRatio:
+  outputWiggleFile: true
+  noHeader: false
+  wiggleFileBinSize: 25
+  combineCPGsFromBothStrands: false
+  minDepthCoverage: 1
+  methylation_patterns: all
+  ctSnpAction: correct
+  pathToBSmethRatio: /usr/local/bin/methratio.py
+  onlyProcessPairedMappings: true
+  removeDuplicateReads: true
+  processTheseChromosomes: all
+  pathToSAMTools: ''
+  host: hsa
+  quietMode: true
+  trimNfillInNucleotides: 0
+  onlyProcessUniqueMappings: false
+
+UnzipInputFiles:
+  noOfThreads: 4
+  unzipSoftware: /usr/bin/pigz
+
+CollapseReads:
+  fastq2fastaLocation: /usr/local/bin/fastq_to_fasta
+  fastxCollapserLocation: /usr/local/bin/fastx_collapser
+
+SingleReadAdapterTrim:
+  adapterSoftware: /usr/local/bin/trimmomatic-0.39.jar
+  adapterFile: /mnt/data21/data/ngsdata/adapters/qiagen_mirna.fasta
+  phredScore: 33
+  minAvgReadQual: 30
+  minAlignScore: 7
+  noOfThreads: 4
+  noOfMismatches: 2
+
+Bowtie2MapSingleReads:
+  mappingSoftware: /usr/bin/bowtie2
+  host: hsa
+  alignmentMode: v
+  noOfMismatches: 2
+  noOfThreads: 4
+
+AnalyzeSAMforStartPositions:
+  baselinePercent: 5
+  minCounts: 1000
+  featureSeparation: 10
+  host: hsa
+  longestFeature: 200
+  featureTypes:
+  - mRNA
+  - CDS
+  - exon
+  mirbaseVersion: 20
+  bleed: 2
+  shortestFeature: 2
+
+FastqQC:
+  fastQCSoftware: /usr/local/bin/fastqc  
+
+DataCleanUp:
+  noOfThreads: 4
+  unzipSoftware: /usr/bin/pigz
+  fileTypes:
+  - fastq
+  - fasta
+  - sam
+
+ReferenceData:
+  genomeRootFolder: /Users/simonray/Dropbox/dropData/genomes/
+  targetscanFolder: /data/targetscan
+  mirbaseFolder: /Users/simonray/Dropbox/dropData/mirbase/
+  mirgenedbFolder: /data/mirgenedb
+
+BowtieMapSingleReads:
+  mappingSoftware: /usr/local/bin/bowtie
+  host: hsu
+  alignmentMode: v
+  noOfMismatches: 2
+  noOfThreads: 4
+
+ParseSAMForMiRNAs:
+  baselinePercent: 1
+  host: hsa
+  analyzeIsomirs: true
+  groupBySeedRegion: true
+  mirbaseVersion: "22.1u"
+  bleed: 2
+
+ParseSAMForPreMiRNAReads:
+  baselinePercent: 0
+  host: hsa
+  analyzeIsomirs: true
+  mirbaseVersion: 21
+  bleed: 0
+
+ConsolidatePreMiRNAData:
+  host: hsa
+  mirbaseVersion: 20  
+
+MergeCounts:
+  host: hsa
+  mirbaseVersion: "22.1u"
+
+MergeIsomiRCounts:
+  host: hsa
+  mirbaseVersion: "22.1"
+
+
+DEwithEdgeR:
+  host: hsa
+  pValue: 0.05
+  mirbaseVersion: "22.1u"
+
+BSMapReads:
+  reportUnmappedReads: false
+  mappingStrand: 0
+  startAtThisRead: 1
+  threeNucleoideMapping: false
+  reportRepeatsValue: 1
+  skipSAMHeader: false
+  endtAtThisRead: -1
+  gapSize: 0
+  host: hsa
+  transitionMap: TC
+  minInsertSize: 28
+  lowQualityFilterValue: 5
+  mapFirstNucleotides: 0
+  trimAdapterSequence: true
+  includeRefSeq: false
+  maxInsertSize: 500
+  seedSize: 16
+  noOfMismatches: 0.08
+  randomSeed: 0
+  adapterSequence:
+  - GATCGGAAGAGCACACGTCTGAACTCCAGTCACACAGTGATCTCGTATGCCGTCTTCTGCTTG
+  - AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT
+  kmerCutoffRatio: 1.0E-6
+  genomeIndexInterval: 4
+  pathToBSmap: /usr/local/bin/bsmap
+  digestionSite: C-CGG
+  messageLevel: 1
+  qualityThresholdTrimValue: 0
+  noOfThreads: 4
+
+GrabFlankingSequence:
+  host: hsa
+  FivePrimeFlankLength: 25
+  ThreePrimeFlankLength: 50
+
+StepAnalyzeSAMforCodingVsNonCoding:
+  host: hsa
+  featureTypes:
+  - exon
+  
